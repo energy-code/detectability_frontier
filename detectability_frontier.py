@@ -12,7 +12,7 @@ Run:
 Outputs (to the working directory):
     - console tables: INWORKS calibration (Table 1), validity frontier (Table 2),
       minimum detectable dose / possibility floor (Table 3), bounded consequences
-      (Table 4), parameter sensitivity (Table 5), and the Section 2.5 / 3.1 checks;
+      (Table 4), parameter sensitivity (Table 5), and two in-text statistical checks;
     - figures: detectability_frontier.png, possibility_floor.png,
       inworks_calibration.png.
 
@@ -135,25 +135,25 @@ def table5_sensitivity():
     print()
 
 
-# === Section 3.1: significance != power (INWORKS <50 mGy stratum) ==========
-def section31_stratum():
+# === significance != power (INWORKS <50 mGy stratum) ======================
+def check_significance_vs_power():
     D, ERR, lo, hi = 24518, 1.38, 0.20, 2.60
     se = se_from_ci(lo, hi)
     mde = K * se
     power_at_lnt = stats.norm.cdf(BETA_LNT / se - Z95)
-    print("SECTION 3.1  INWORKS <50 mGy: statistically significant yet underpowered")
+    print("INWORKS <50 mGy: statistically significant yet underpowered")
     print(f"  ERR={ERR}/Gy (90% CI {lo}-{hi}); SE={se:.3f}/Gy; "
           f"MDE(80% power)={mde:.2f}/Gy ({mde/BETA_LNT:.1f}x LNT slope); "
           f"power at beta=0.5: {power_at_lnt:.2f}")
     print()
 
 
-# === Section 2.5: MDE = published upper CL at <20 mGy ======================
-def section25_check():
+# === MDE = published upper CL at <20 mGy ==================================
+def check_mde_vs_upper_cl():
     D, lo, hi = 21293, -1.33, 4.06
     se = se_from_ci(lo, hi)
     mde = K * se
-    print(f"SECTION 2.5  <20 mGy: SE={se:.3f}/Gy, MDE=K*SE={mde:.2f}/Gy "
+    print(f"INWORKS <20 mGy: SE={se:.3f}/Gy, MDE=K*SE={mde:.2f}/Gy "
           f"(= published upper 90% CL {hi}/Gy; ~{mde/BETA_LNT:.0f}x LNT slope)")
     print()
 
@@ -191,7 +191,7 @@ def figures():
     ax.grid(which="minor", ls=":", lw=0.4, alpha=0.35)
     ax.set_ylim(1e2, 1e13)
     ax.legend(fontsize=9, loc="upper right")
-    fig.tight_layout(); fig.savefig("detectability_frontier.png", dpi=140); plt.close(fig)
+    fig.tight_layout(); fig.savefig("detectability_frontier.png", dpi=600); plt.close(fig)
 
     # Fig 2: possibility floor vs effect size
     bb = np.logspace(np.log10(0.05), np.log10(10.0), 400)
@@ -241,8 +241,8 @@ def main():
     table3_floor()
     table4_consequences()
     table5_sensitivity()
-    section31_stratum()
-    section25_check()
+    check_significance_vs_power()
+    check_mde_vs_upper_cl()
     figures()
     print("figures written: detectability_frontier.png, possibility_floor.png, "
           "inworks_calibration.png")

@@ -1,0 +1,13 @@
+# generated figures and artifacts (reproducible from the scripts)
+*.png
+*.html
+*_files/
+
+# python
+__pycache__/
+*.pyc
+
+# R
+.Rhistory
+.RData
+.Rproj.user/

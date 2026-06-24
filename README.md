@@ -1,20 +1,22 @@
 # Detectability Frontier — Low-Dose Radiation Epidemiology
 
-Code for **"The Detectability Frontier of Low-Dose Radiation Epidemiology: A
-Source-Agnostic Floor in the Linear-ERR Framework"** (A. Stein).
+Code for **"The Detectability Frontier: An Information Floor for Low-Dose
+Radiation Epidemiology"** (A. Stein).
 
 The analysis reproduces every numerical result, table, and figure in the paper
-from closed-form expressions; there are no input data files. Two scripts:
+from closed-form expressions; there are no input data files. Three scripts:
 
 - `detectability_frontier.py` (Python) — prints all tables and the in-text
   checks and writes **Figure 2** plus the auxiliary figures.
 - `floor_figure.R` (R) — draws **Figure 1**, the possibility-floor heatmap.
+- `graphical_abstract.py` (Python) — draws the journal graphical abstract.
 
 ## Run
 
 ```bash
 pip install numpy scipy matplotlib
 python detectability_frontier.py
+python graphical_abstract.py
 ```
 
 ```r
@@ -31,8 +33,8 @@ Rscript floor_figure.R
 - **Table 4** — bounded consequences (largest undetectable effect by study size)
 - **Table 5** — sensitivity of the floor to baseline mortality `p` and test
   stringency `K = z_alpha + z_pow`
-- the **Section 2.5** (MDE = published upper CL) and **Section 3.1**
-  (significance ≠ power) checks
+- two in-text checks: the MDE-equals-published-upper-CL check (<20 mGy) and the
+  significance-without-power check (<50 mGy)
 
 and writes:
 
@@ -47,6 +49,11 @@ and writes:
 
 - `floor_heatmap.png` — **Figure 1**, the possibility floor as a field
   (people required across dose and effect size, with the population floors marked)
+
+`graphical_abstract.py` writes:
+
+- `graphical_abstract.png` — the journal graphical abstract (not a numbered
+  manuscript figure)
 
 ## Method
 

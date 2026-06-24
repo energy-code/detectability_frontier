@@ -148,5 +148,5 @@ p_heat <- ggplot(grid, aes(x, y)) +
         plot.title = element_text(hjust = 0.5),     
         axis.ticks.length = grid::unit(3, "pt"))
 
-ggsave("floor_heatmap.png", p_heat, width = 8, height = 6, dpi = 300)
+ggsave("floor_heatmap.png", p_heat, width = 8, height = 6, dpi = 600)
 cat("wrote floor_heatmap.png\n")
